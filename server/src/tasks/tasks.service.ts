@@ -47,10 +47,18 @@ export class TasksService {
 
   async update(id: number, updateTaskDto: UpdateTaskDto):Promise<Task> {
     const task = await this.taskRepository.findOneBy({ id: id });
-    task.worker = updateTaskDto.worker
-    task.comment = updateTaskDto.comment
-    task.endDate = updateTaskDto.endDate
-    task.status = updateTaskDto.status
+    if(updateTaskDto.worker){
+      task.worker = updateTaskDto.worker
+    }
+    if(updateTaskDto.comment){
+      task.comment = updateTaskDto.comment
+    }
+    if(updateTaskDto.endDate){
+      task.endDate = updateTaskDto.endDate
+    }
+    if(updateTaskDto.status){
+      task.status = updateTaskDto.status
+    }
     return this.taskRepository.save(task);
   }
 

@@ -47,23 +47,22 @@ export default {
     },
     mounted(){
         axios
-        .post('http://localhost:3000/user/role', {}, {withCredentials: true})
+        .post('http://localhost:3000/user/role', {"Access-Control-Allow-Origin": "http://localhost:3000"}, {withCredentials: true})
         .then(res => {
             this.role = res.data
             if(this.role == 'worker'){
             axios
-                .post('http://localhost:3000/tasks/worker', {}, {withCredentials: true})
+                .post('http://localhost:3000/tasks/worker', {"Access-Control-Allow-Origin": "http://localhost:3000"}, {withCredentials: true})
                 .then(res => this.tasks = res.data)
                 }
             if(this.role == 'user'){
                 axios
-                .post('http://localhost:3000/tasks/user', {}, {withCredentials: true})
+                .post('http://localhost:3000/tasks/user', {"Access-Control-Allow-Origin": "http://localhost:3000"}, {withCredentials: true})
                 .then(res => {this.tasks = res.data})
             }else{
                 axios
                 .get('http://localhost:3000/tasks', {withCredentials: true})
-                .then(res => {this.tasks = res.data
-                })
+                .then(res => {this.tasks = res.data})
             }
         })
     },
@@ -104,6 +103,7 @@ export default {
         },
 
         createTaskPopup(){
+            this.task = {}
             this.action = 'userCreate'
             this.popup = !this.popup
         },
@@ -124,12 +124,12 @@ export default {
             if(e){
                 if(this.role == 'worker'){
             axios
-                .post('http://localhost:3000/tasks/worker', {}, {withCredentials: true})
+                .post('http://localhost:3000/tasks/worker', {"Access-Control-Allow-Origin": "http://localhost:3000/login"}, {withCredentials: true})
                 .then(res => this.tasks = res.data)
                 }
             if(this.role == 'user'){
                 axios
-                .post('http://localhost:3000/tasks/user', {}, {withCredentials: true})
+                .post('http://localhost:3000/tasks/user', {"Access-Control-Allow-Origin": "http://localhost:3000/login"}, {withCredentials: true})
                 .then(res => {this.tasks = res.data})
             }else{
                 axios

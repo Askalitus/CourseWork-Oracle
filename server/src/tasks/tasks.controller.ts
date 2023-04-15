@@ -32,7 +32,8 @@ export class TasksController {
   @UseGuards(JwtAuthGuard)
   @Public()
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateTaskDto: UpdateTaskDto):Promise<Task> {
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateTaskDto: UpdateTaskDto, @Res({ passthrough: true }) res: Response):Promise<Task> {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:5173')
     return this.tasksService.update(id, updateTaskDto);
   }
 
@@ -46,7 +47,8 @@ export class TasksController {
   @UseGuards(JwtAuthGuard)
   @Roles(RoleList.Worker)
   @Post('worker')
-  findeForWorker(@Req() req: Request){
+  findeForWorker(@Req() req: Request, @Res({ passthrough: true }) res: Response){
+    res.header('Access-Control-Allow-Origin', 'http://localhost:5173')
     return this.tasksService.findForWorker(req.cookies.userId)
   }
 

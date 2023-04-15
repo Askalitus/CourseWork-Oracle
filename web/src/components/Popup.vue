@@ -53,8 +53,8 @@
             </div>
         </div>
         <div class="buttons">
-            <button v-if="task.status == 2">Отметить выполненным</button>
-            <button v-if="task.status == 3">Убрать выполнение</button>
+            <button v-if="task.status == 2" @click="checkTask">Отметить выполненным</button>
+            <button v-if="task.status == 3" @click="uncheckTask">Убрать выполнение</button>
             <button @click="closePopup">Закрыть</button>
         </div>
     </div>
@@ -182,8 +182,6 @@ export default {
     },
     methods:{
         closePopup(){
-            this.problem = ''
-            this.cabinet = ''
             this.$emit('closePopup')
         },
         getWorker(e){
@@ -213,11 +211,18 @@ export default {
         },
         updateTask(){
             axios
-                .patch('http://localhost:3000/task-desc', {
+                .patch('http://localhost:3000/task-desc/' + this.task.description, {
                     problem: this.problem,
                     cabinet: this.cabinet,
                 }, { withCredentials: true })
-            this.$emit('closePopup', true)
+                .then(() => this.$emit('closePopup', true))
+        },
+        checkTask(){
+            axios
+            .patch('http://localhost:3000/tasks/' + this.task.id, {
+                status: 3
+            }, { withCredentials: true })
+            .then(() => this.$emit('closePopup', true))
         }
     }
 }
