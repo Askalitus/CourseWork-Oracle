@@ -22,43 +22,17 @@ export class TasksService {
     return this.taskRepository.save(task);
   }
 
-  async findAll():Promise<any>{
-    let tasks = await this.taskRepository.find()
-    let descTask = await this.taskDesk.findAll()
-
-    let tasksResult = []
-
-    tasks.forEach( task => {
-      descTask.forEach(el => {
-        let res = {}
-        if(task.description == el.id){
-          Object.keys(task).forEach(key => res[key] = task[key])
-          Object.keys(el).forEach(key => res[key] = el[key])
-          tasksResult.push(res)
-        }
-      })
-    })
-    return tasksResult;
-  }
-
   findOne(id: number):Promise<Task> {
     return this.taskRepository.findOneBy({ id: id });
   }
 
   async update(id: number, updateTaskDto: UpdateTaskDto):Promise<Task> {
+    console.log(id)
     const task = await this.taskRepository.findOneBy({ id: id });
-    if(updateTaskDto.worker){
       task.worker = updateTaskDto.worker
-    }
-    if(updateTaskDto.comment){
       task.comment = updateTaskDto.comment
-    }
-    if(updateTaskDto.endDate){
       task.endDate = updateTaskDto.endDate
-    }
-    if(updateTaskDto.status){
       task.status = updateTaskDto.status
-    }
     return this.taskRepository.save(task);
   }
 
@@ -66,34 +40,10 @@ export class TasksService {
     await this.taskRepository.delete(id);
   }
 
-  async findForWorker(id: number){
-    let tasks = await this.taskRepository.find()
-    let middleArr = []
+  async getTasks(id: number, role: string){
 
-    tasks.forEach(el => {
-      if(id == el.worker){
-        middleArr.push(el)
-      }
-    })
-
-    let descTask = await this.taskDesk.findAll()
-    let tasksResult = []
-
-    middleArr.forEach( task => {
-      descTask.forEach(el => {
-        let res = {}
-        if(task.description == el.id){
-          Object.keys(task).forEach(key => res[key] = task[key])
-          Object.keys(el).forEach(key => res[key] = el[key])
-          tasksResult.push(res)
-        }
-      })
-    })
-    return tasksResult
-  }
-
-  async findForUser(id: number){
-    let descTask = await this.taskDesk.findAll()
+    if (role == "user"){
+      let descTask = await this.taskDesk.findAll()
     let middleArr = []
     descTask.forEach(el => {
       if(id == el.applicant){
@@ -115,5 +65,51 @@ export class TasksService {
       })
     })
     return tasksResult
+    }
+
+    if (role == "worker"){
+      let tasks = await this.taskRepository.find()
+    let middleArr = []
+
+    tasks.forEach(el => {
+      if(id == el.worker){
+        middleArr.push(el)
+      }
+    })
+
+    let descTask = await this.taskDesk.findAll()
+    let tasksResult = []
+
+    middleArr.forEach( task => {
+      descTask.forEach(el => {
+        let res = {}
+        if(task.description == el.id){
+          Object.keys(el).forEach(key => res[key] = el[key])
+          Object.keys(task).forEach(key => res[key] = task[key])
+          tasksResult.push(res)
+        }
+      })
+    })
+    return tasksResult
+    }
+
+    if (role == "admin"){
+      let tasks = await this.taskRepository.find()
+    let descTask = await this.taskDesk.findAll()
+
+    let tasksResult = []
+
+    tasks.forEach( task => {
+      descTask.forEach(el => {
+        let res = {}
+        if(task.description == el.id){
+          Object.keys(el).forEach(key => res[key] = el[key])
+          Object.keys(task).forEach(key => res[key] = task[key])
+          tasksResult.push(res)
+        }
+      })
+    })
+    return tasksResult;
+    }
   }
 }

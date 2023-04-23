@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards, Req, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards, Req, Res, Put } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
@@ -23,14 +23,6 @@ export class TasksController {
 
   @UseGuards(JwtAuthGuard)
   @Public()
-  @Get()
-  findAll(@Res({ passthrough: true }) res: Response){
-    res.header('Access-Control-Allow-Origin', 'http://localhost:5173')
-    return this.tasksService.findAll();
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Public()
   @Patch(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() updateTaskDto: UpdateTaskDto, @Res({ passthrough: true }) res: Response):Promise<Task> {
     res.header('Access-Control-Allow-Origin', 'http://localhost:5173')
@@ -45,18 +37,10 @@ export class TasksController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Roles(RoleList.Worker)
-  @Post('worker')
-  findeForWorker(@Req() req: Request, @Res({ passthrough: true }) res: Response){
+  @Public()
+  @Post('all')
+  getTasks(@Req() req: Request, @Res({ passthrough: true }) res: Response){
     res.header('Access-Control-Allow-Origin', 'http://localhost:5173')
-    return this.tasksService.findForWorker(req.cookies.userId)
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Roles(RoleList.User)
-  @Post('user')
-  findeForUser(@Req() req: Request, @Res({ passthrough: true }) res: Response){
-    res.header('Access-Control-Allow-Origin', 'http://localhost:5173')
-    return this.tasksService.findForUser(req.cookies.userId)
+    return this.tasksService.getTasks(req.cookies.userId, req.cookies.role)
   }
 }

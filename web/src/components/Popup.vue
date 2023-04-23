@@ -223,6 +223,13 @@ export default {
                 status: 3
             }, { withCredentials: true })
             .then(() => this.$emit('closePopup', true))
+        },
+        uncheckTask(){
+            axios
+            .patch('http://localhost:3000/tasks/' + this.task.id, {
+                status: 2
+            }, { withCredentials: true })
+            .then(() => this.$emit('closePopup', true))
         }
     }
 }
