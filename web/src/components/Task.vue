@@ -14,7 +14,7 @@
     </div>
     <div class="item">
       <p class="title">Состояние</p>
-      <p :class="{ green: this.statusName, yellow: this.statusName == 'Принято', orange: this.statusName == 'В обработке'}">{{ statusName }}</p>
+      <p :class="{ green: statusName == 'Готово', yellow: statusName == 'Принято', orange: statusName == 'В обработке'}">{{ statusName }}</p>
     </div>
     <button v-if="this.role == 'user'" @click="updateTaskPopup">
       <svg width="20" height="20" viewBox="0 0 248 248" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,7 +45,6 @@ import axios from 'axios'
 export default {
   data(){
     return{
-      status: []
     }
   },
   props: {task: {
@@ -74,17 +73,13 @@ export default {
       }
     },
     statusName(){
-      axios
-      .get('http://localhost:3000/status', {withCredentials: true})
-      .then(res => this.status = res.data)
-      let mid = this.status.filter(el => el.id == this.task.status)
-      return mid[0].status_name
+      if(this.task.status == 2){
+        return 'Принято'
+      }
+      if(this.task.status == 3){
+        return 'Готово'
+      }
     }
-  },
-  mounted() {
-    axios
-    .get('http://localhost:3000/status', {withCredentials: true})
-    .then(res => this.status = res.data)
   },
   methods: {
     updateTaskPopup(){
