@@ -11,7 +11,7 @@ export class StatusController {
   constructor(private readonly statusService: StatusService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Roles(RoleList.Admin)
+  @Public()
   @Get()
   findAll():Promise<Status[]> {
     return this.statusService.findAll();
