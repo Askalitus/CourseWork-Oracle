@@ -79,6 +79,9 @@ export default {
       if(this.task.status == 3){
         return 'Готово'
       }
+      if(this.task.status == 1){
+        return 'В обработке'
+      }
     }
   },
   methods: {

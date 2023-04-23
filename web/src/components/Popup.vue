@@ -81,10 +81,8 @@
             </div>
             <div class="item">
                 <p class="title">Ответственный</p>
-                <select class="select">
-                    <option selected disabled style='display: none' v-if="!task.worker">Выбрать ответственного</option>
-                    <option selected v-if="task.worker">{{ this.worker }}</option>
-                    <option v-for="worker in workerList" :key="worker" @change="getWorker(worker)">
+                <select class="select" v-model="selected_worker">
+                    <option v-for="worker in workerList" :key="worker">
                         {{ worker }}
                     </option>
                 </select>
@@ -104,7 +102,7 @@
             </div>
         </div>
         <div class="buttons">
-            <button v-if="!task.worker">Подтвердить задание</button>
+            <button v-if="!task.worker" @click="selectWorker">Подтвердить задание</button>
             <button v-if="task.worker">Изменить</button>
             <button @click="closePopup">Закрыть</button>
         </div>
@@ -135,7 +133,7 @@ export default {
             role: '',
             applicant: {},
             workers: [],
-            selected_worker: null,
+            selected_worker: '',
             worker:'',
             error: '',
 
@@ -152,8 +150,8 @@ export default {
         this.problem = this.task.problem
         this.cabinet = this.task.cabinet
 
-        if(this.task.worker){
-            this.selected_worker = this.worker
+        if(!this.task.worker){
+            this.selected_worker = 'Выберите ответственного'
         }
         axios
         .post('http://localhost:3000/user/role', {}, {withCredentials: true})
@@ -173,7 +171,7 @@ export default {
                 }else{
                     this.workers = res.data.filter( us => us.role == 2)
                     let wrk = this.workers.filter( us => us.id == this.task.worker)
-                    this.worker = wrk[0].id + ' ' + wrk[0].surname + ' ' + wrk[0].name + ' ' + wrk[0].patronymic
+                    this.selected_worker = wrk[0].id + ' ' + wrk[0].surname + ' ' + wrk[0].name + ' ' + wrk[0].patronymic
                     this.workers = this.workers.filter( us => us.id != this.task.worker)
                 }
                 })
@@ -185,6 +183,7 @@ export default {
             this.$emit('closePopup')
         },
         getWorker(e){
+            console.log(this.selected_worker)
             this.selected_worker = Number(e.split(' ')[0])
         },
         createTask(){
@@ -237,6 +236,16 @@ export default {
             axios
             .patch('http://localhost:3000/tasks/' + this.task.id, {
                 status: 2
+            }, { withCredentials: true })
+            .then(() => this.$emit('closePopup', true))
+        },
+        selectWorker(){
+            console.log(this.selected_worker)
+            axios
+                .patch('http://localhost:3000/tasks/' + this.task.id, {
+                worker: Number(this.selected_worker.split(' ')[0]),
+                status: 2,
+                comment: this.task.comment
             }, { withCredentials: true })
             .then(() => this.$emit('closePopup', true))
         }
