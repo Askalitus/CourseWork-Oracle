@@ -217,6 +217,15 @@ export default {
                 }, { withCredentials: true })
                 .then(() => this.$emit('closePopup', true))
         },
+        deleteTask(){
+            axios
+                .delete('http://localhost:3000/task-desc/' + this.task.description, { withCredentials: true })
+                .then(() => {
+                    axios
+                    .delete('http://localhost:3000/tasks' + this.task.id, {
+                }, { withCredentials: true })
+                this.$emit('closePopup', true)})
+        },
         checkTask(){
             axios
             .patch('http://localhost:3000/tasks/' + this.task.id, {
