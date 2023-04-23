@@ -27,7 +27,6 @@ export class TasksService {
   }
 
   async update(id: number, updateTaskDto: UpdateTaskDto):Promise<Task> {
-    console.log(id)
     const task = await this.taskRepository.findOneBy({ id: id });
       task.worker = updateTaskDto.worker
       task.comment = updateTaskDto.comment
@@ -94,7 +93,7 @@ export class TasksService {
     }
 
     if (role == "admin"){
-      let tasks = await this.taskRepository.find()
+    let tasks = await this.taskRepository.find()
     let descTask = await this.taskDesk.findAll()
 
     let tasksResult = []
