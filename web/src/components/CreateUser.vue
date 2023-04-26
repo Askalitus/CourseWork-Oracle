@@ -3,9 +3,9 @@
         <div class="top">
             <div class="file">
                 <p class="title">Изображение</p>
-                <input type="file" class="file_loader" name="image" accept="image/*">
+                <input type="file" class="file_loader" name="image" accept="image/*" ref="file">
             </div>
-            <button>Создать</button>
+            <button @click="createUser">Создать</button>
         </div>
 
         <div class="wrapper">
@@ -27,7 +27,7 @@
                 <div class="item">
                     <p class="title">Роль</p>
                     <select v-model="role">
-                        <option></option>
+                        <option v-for="role in roleList" :key="role" selected>{{ role }}</option>
                     </select>
                 </div>
                 <div class="item">
@@ -44,8 +44,60 @@
 </template>
 
 <script>
+import axios from 'axios'
     export default {
-        
+        data(){
+            return{
+                name: '',
+                surname: '',
+                patronymic: '',
+                role: '',
+                login: '',
+                password: '',
+                file: '',
+
+                roles: []
+            }
+        },
+        methods:{
+            createUser(){
+                this.file = this.$refs.file.files[0]
+                let formData = new FormData();
+                formData.append('file', this.file)
+                axios
+                .post("http://localhost:3000/user",
+                    { "Access-Control-Allow-Origin": "http://localhost:3000",
+                        name: this.name,
+                        surname: this.surname,
+                        patronymic: this.patronymic,
+                        role: this.role,
+                        password: this.password,
+                        login: this.login,
+                        file: formData
+
+                    },
+                    { withCredentials: true }
+                )
+                .then((res) => {});
+            }
+        },
+        mounted(){
+            axios
+                .get(
+                    "http://localhost:3000/role",
+                    { withCredentials: true }
+                )
+                .then((res) => {
+                    this.roles = res.data;
+                    console.log(res)
+                    console.log(this.roles)
+                });
+        },
+        computed: {
+            roleList(){
+                return this.roles.map(el => el.id + ' ' + el.role_name)
+            }
+        }
     }
 </script>
 
@@ -88,6 +140,9 @@
         border: none;
         margin-top: 5px;
         color: white; 
+    }
+    option{
+        color: white;
     }
     .file_loader{
         color: white;
