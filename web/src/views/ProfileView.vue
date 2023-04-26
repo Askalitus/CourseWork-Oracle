@@ -15,6 +15,7 @@
           @adminPopup="adminPopup($event)"
           @closePopup="closePopup($event)"
           @adminPanel="adminPanel"
+          @toTask="toTask"
           :tasks="tasks"
         />
       </div>
@@ -129,6 +130,9 @@ export default {
     },
     adminPanel(){
       this.$router.push("/admin")
+    },
+    toTask(){
+      this.$router.push("/profile")
     }
   },
 };

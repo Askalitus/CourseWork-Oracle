@@ -26,7 +26,7 @@ export class UserService {
     return workers
   }
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto, file: Express.Multer.File): Promise<User> {
     const user = new User();
     user.login = createUserDto.login
     user.password = await bcrypt.hash(createUserDto.password, 10)
@@ -34,7 +34,7 @@ export class UserService {
     user.surname = createUserDto.surname;
     user.patronymic = createUserDto.patronymic;
     user.role = createUserDto.role;
-    user.photo = createUserDto.photo
+    user.photo = file.filename
 
     return this.usersRepository.save(user);
   }

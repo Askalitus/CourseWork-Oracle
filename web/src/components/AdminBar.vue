@@ -1,7 +1,7 @@
 <template>
     <div class="panel">
         <p>Действие:</p>
-        <p class="clickable" @click="sortAll()">Создать пользователя</p>
+        <p class="clickable" @click="sortAll()">Пользователи</p>
         <p class="clickable" @click="sortNew()">Статистика</p>
     </div>
 </template>
@@ -14,6 +14,7 @@
 
 <style scoped>
 .panel{
+    width: 33.125vw;
     background-color: #323232;
     padding: 1.57407407vh 0.885416667vw;
     display: flex;
@@ -33,7 +34,5 @@ p{
     color: #14FFEC;
     cursor: pointer;
 }
-.selected{
-        color: #14FFEC;
-    }
+
 </style>
