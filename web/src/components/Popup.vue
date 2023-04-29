@@ -140,7 +140,7 @@
         <button v-if="!task.worker" @click="selectWorker">
           Подтвердить задание
         </button>
-        <button v-if="task.worker">Изменить</button>
+        <button v-if="task.worker" @click="updateWorker">Изменить</button>
         <button @click="closePopup">Закрыть</button>
       </div>
     </div>
@@ -331,6 +331,18 @@ export default {
         )
         .then(() => this.$emit("closePopup", { popup: false }));
     },
+    updateWorker(){
+      axios
+        .patch(
+          "http://localhost:3000/tasks/" + this.task.id,
+          {
+            worker: Number(this.selected_worker.split(" ")[0]),
+            comment: this.task.comment,
+          },
+          { withCredentials: true }
+        )
+        .then(() => this.$emit("closePopup", { popup: false }));
+    }
   },
 };
 </script>
