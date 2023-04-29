@@ -34,7 +34,10 @@ export class UserService {
     user.surname = createUserDto.surname;
     user.patronymic = createUserDto.patronymic;
     user.role = createUserDto.role;
-    user.photo = file.filename
+    console.log(file)
+    if(file){
+      user.photo = file.filename
+    }
 
     return this.usersRepository.save(user);
   }

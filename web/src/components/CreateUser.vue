@@ -3,7 +3,7 @@
         <div class="top">
             <div class="file">
                 <p class="title">Изображение</p>
-                <input type="file" class="file_loader" name="image" accept="image/*" ref="file">
+                <input type="file" class="file_loader" name="image" accept="image/*" ref="file" id="file">
             </div>
             <button @click="createUser">Создать</button>
         </div>
@@ -61,22 +61,25 @@ import axios from 'axios'
         },
         methods:{
             createUser(){
-                this.file = this.$refs.file.files[0]
-                let formData = new FormData();
-                formData.append('file', this.file)
+                let fileinput = document.querySelector('#file')
+                console.log(file.files[0])
+                let file = new FormData();
+                formData.append('file', fileinput.files[0])
+                console.log(formData)
+                console.log(this.role.split(' ')[0])
                 axios
                 .post("http://localhost:3000/user",
-                    { "Access-Control-Allow-Origin": "http://localhost:3000",
+                    { 
                         name: this.name,
                         surname: this.surname,
                         patronymic: this.patronymic,
-                        role: this.role,
+                        role: this.role.split(' ')[0],
                         password: this.password,
                         login: this.login,
-                        file: formData
+                        formData
 
                     },
-                    { withCredentials: true }
+                    { withCredentials: true, headers: {"Access-Control-Allow-Origin": "http://localhost:3000", 'Content-Type': 'multipart/form-data'} }
                 )
                 .then((res) => {});
             }
@@ -89,8 +92,6 @@ import axios from 'axios'
                 )
                 .then((res) => {
                     this.roles = res.data;
-                    console.log(res)
-                    console.log(this.roles)
                 });
         },
         computed: {

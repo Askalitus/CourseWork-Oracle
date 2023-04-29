@@ -1,23 +1,24 @@
 <template>
     <div class="box">
-        <AdminBar />
+        <div class="admin__bar">
+          <p>Действие:</p>
+          <router-link  class="clickable" to="/admin">Пользователи</router-link>
+          <router-link  class="clickable" to="/statistic">Статистика</router-link>
+        </div>
         <div class="button__panel">
-            <p class="action">Создание</p>
+            <p class="action">{{action}}</p>
             <button v-if="createUser">Создать</button>
             <button @click="toTask">Задания</button>
         </div>
-        <CreateUser v-if="createUser" />
+        <router-view />
     </div>
 </template>
 
 <script>
-import AdminBar from '../components/AdminBar.vue';
-import CreateUser from '../components/CreateUser.vue';
-
     export default {
-    components: { AdminBar, CreateUser },
     data(){
       return{
+        action: 'Пользователи',
         createUser: true
       }
     },
@@ -30,6 +31,32 @@ import CreateUser from '../components/CreateUser.vue';
 </script>
 
 <style scoped>
+
+.admin__bar{
+    width: 33.125vw;
+    background-color: #323232;
+    padding: 1.57407407vh 0.885416667vw;
+    display: flex;
+    gap: 1.04166667vw;
+    border-radius: 0.78125vw;
+}
+
+p{
+  color: white;
+  font-size: 0.78125vw;
+  font-weight: 700;
+}
+
+.clickable{
+    font-size: 0.729166667vw;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+}
+.clickable:hover{
+    color: #14FFEC;
+    cursor: pointer;
+}
     .box{
         display: flex;
         flex-direction: column;
@@ -41,8 +68,6 @@ import CreateUser from '../components/CreateUser.vue';
   display: flex;
   justify-content: space-between;
   align-items: start;
-  margin-top: 2.77777778vh;
-  margin-bottom: 1.85185185vh;
 }
 button {
   padding: 1.38888889vh 1.82291667vw;
