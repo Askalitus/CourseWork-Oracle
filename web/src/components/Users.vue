@@ -1,6 +1,7 @@
 <template>
     <div class="tasks">
-        <div v-for="user in users" :key="user">
+        <input type="text" v-model="search" class="search" placeholder="Поиск по ФИО">
+        <div v-for="user in searchResult" :key="user">
             <user :user="user" />
         </div>
     </div>
@@ -13,7 +14,8 @@ import User from './User.vue'
         components: { User },
         data(){
             return{
-                users: []
+                users: [],
+                search: ''
             }
         },
         mounted(){
@@ -21,6 +23,22 @@ import User from './User.vue'
                 .get("http://localhost:3000/user",
                 { withCredentials: true, "Access-Control-Allow-Origin": "http://localhost:3000" })
                 .then(res => this.users = res.data)
+        },
+        computed: {
+            searchResult(){
+                if(this.search.split(' ')[2]){
+                    return this.users.filter(el => el.surname.includes(this.search.split(' ')[0]) && el.name.includes(this.search.split(' ')[1]) && el.patronymic.includes(this.search.split(' ')[2]))
+                }
+                else if(this.search.split(' ')[1]){
+                    return this.users.filter(el => el.surname.includes(this.search.split(' ')[0]) && el.name.includes(this.search.split(' ')[1]))
+                }
+                else if(this.search.split(' ')[0].length > 0){
+                    return this.users.filter(el => el.surname.includes(this.search.split(' ')[0]))
+                }
+                else{
+                    return this.users
+                }
+            }
         }
     }
 </script>
@@ -32,4 +50,12 @@ import User from './User.vue'
         gap: 20px;
         width: 100%;
     }
+    .search{
+    width: 33.2291667vw;
+    padding: 0.833333333vw;
+    background: #323232;
+    border-radius: 15px; 
+    border: none;
+    color: white;
+}
 </style>

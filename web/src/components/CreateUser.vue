@@ -61,12 +61,6 @@ import axios from 'axios'
         },
         methods:{
             createUser(){
-                let fileinput = document.querySelector('#file')
-                console.log(file.files[0])
-                let file = new FormData();
-                formData.append('file', fileinput.files[0])
-                console.log(formData)
-                console.log(this.role.split(' ')[0])
                 axios
                 .post("http://localhost:3000/user",
                     { 
@@ -75,8 +69,7 @@ import axios from 'axios'
                         patronymic: this.patronymic,
                         role: this.role.split(' ')[0],
                         password: this.password,
-                        login: this.login,
-                        formData
+                        login: this.login
 
                     },
                     { withCredentials: true, headers: {"Access-Control-Allow-Origin": "http://localhost:3000", 'Content-Type': 'multipart/form-data'} }

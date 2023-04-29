@@ -141,7 +141,8 @@ export default {
 <style scoped>
 .container {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  margin-top: 75px;
   justify-content: center;
   height: 100%;
 }
