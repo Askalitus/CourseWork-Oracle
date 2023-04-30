@@ -141,13 +141,12 @@ export default {
 <style scoped>
 .container {
   display: flex;
-  /* align-items: center; */
   margin-top: 75px;
   justify-content: center;
   height: 100%;
 }
 .viniet {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
