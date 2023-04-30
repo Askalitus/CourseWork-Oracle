@@ -1,5 +1,5 @@
 <template>
-    <div class="tasks">
+    <div class="users">
         <input type="text" v-model="search" class="search" placeholder="Поиск по ФИО">
         <div v-for="user in searchResult" :key="user">
             <user :user="user" @updateUserList="updateUserList" @detailUser="detailUser($event)" />
@@ -56,7 +56,7 @@ import User from './User.vue'
 </script>
 
 <style scoped>
-    .tasks{
+    .users{
         display: flex;
         flex-direction: column;
         gap: 20px;
