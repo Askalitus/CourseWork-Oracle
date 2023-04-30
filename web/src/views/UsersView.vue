@@ -6,33 +6,40 @@
             <button v-if="createUser" @click="toggleCreate">Назад</button>
             <button @click="toTask">Задания</button>
         </div>
-        <CreateUser v-if="createUser" />
-        <users v-if="!createUser" />
+        <CreateUser v-if="createUser" :user="user" @toggleCreate="toggleCreate" />
+        <users v-if="!createUser" @detailUser="detailUser($event)" />
     </div>
 </template>
 
 <script>
-    import CreateUser from '../components/CreateUser.vue';
+import CreateUser from '../components/CreateUser.vue';
 import Users from '../components/Users.vue';
     export default {
         components: {CreateUser, Users},
         data(){
             return{
                 action: 'Пользователи',
-                createUser: false
+                createUser: false,
+                user: {}
             }
         },
         methods:{
         toTask(){
             this.$emit('toTask')
         },
-        toggleCreate(){
+        toggleCreate(e){
             this.createUser = !this.createUser
             if(this.action == 'Пользователи'){
                 this.action = 'Создать'
             }else{
                 this.action = 'Пользователи'
+                this.user = {}
             }
+        },
+        detailUser(user){
+            this.createUser = !this.createUser
+            this.action = 'Изменить',
+            this.user = user
         }
         }
     }
@@ -73,5 +80,17 @@ button:active {
 .action{
   font-size: 2.08333333vw;
   color: white;
+}
+
+.viniet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

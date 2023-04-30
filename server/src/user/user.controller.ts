@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Headers, UseGuards, Res, Req, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Headers, UseGuards, Res, Req, UseInterceptors, UploadedFile, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -49,7 +49,9 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Roles(RoleList.Admin)
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto): Promise<User> {
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto, @Res({ passthrough: true }) res: Response): Promise<User> {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:5173')
+    console.log(updateUserDto)
     return this.userService.update(id, updateUserDto);
   }
 

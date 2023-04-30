@@ -5,7 +5,8 @@
                 <p class="title">Изображение</p>
                 <input type="file" class="file_loader" name="image" accept="image/*" ref="file" id="file">
             </div>
-            <button @click="createUser">Создать</button>
+            <button @click="createUser" v-if="!user.name">Создать</button>
+            <button @click="updateUser" v-if="user.name">Изменить</button>
         </div>
 
         <div class="wrapper">
@@ -46,6 +47,7 @@
 <script>
 import axios from 'axios'
     export default {
+        props: { user: Object },
         data(){
             return{
                 name: '',
@@ -55,6 +57,7 @@ import axios from 'axios'
                 login: '',
                 password: '',
                 file: '',
+                userInfo: {},
 
                 roles: []
             }
@@ -74,10 +77,37 @@ import axios from 'axios'
                     },
                     { withCredentials: true, headers: {"Access-Control-Allow-Origin": "http://localhost:3000", 'Content-Type': 'multipart/form-data'} }
                 )
-                .then((res) => {});
+                .then((res) => {this.$emit('toggleCreate')});
+            },
+            updateUser(){
+                let role = ''
+                if(!this.role){
+                    role = this.user.role 
+                }else{
+                    role = this.role.split(' ')[0]
+                }
+                axios
+                .patch("http://localhost:3000/user/" + this.user.id,
+                    { 
+                        name: this.name,
+                        surname: this.surname,
+                        patronymic: this.patronymic,
+                        role: role,
+                        password: this.password,
+                        login: this.login
+                    },
+                    { withCredentials: true, headers: {"Access-Control-Allow-Origin": "http://localhost:3000" }}
+                )
+                .then((res) => {this.$emit('toggleCreate')});
             }
         },
         mounted(){
+            if(this.user){
+                this.name = this.user.name
+                this.surname = this.user.surname
+                this.patronymic = this.user.patronymic
+                this.login = this.user.login
+            }
             axios
                 .get(
                     "http://localhost:3000/role",

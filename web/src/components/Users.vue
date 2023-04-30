@@ -2,7 +2,7 @@
     <div class="tasks">
         <input type="text" v-model="search" class="search" placeholder="Поиск по ФИО">
         <div v-for="user in searchResult" :key="user">
-            <user :user="user" />
+            <user :user="user" @updateUserList="updateUserList" @detailUser="detailUser($event)" />
         </div>
     </div>
 </template>
@@ -15,7 +15,8 @@ import User from './User.vue'
         data(){
             return{
                 users: [],
-                search: ''
+                search: '',
+                user: {},
             }
         },
         mounted(){
@@ -39,6 +40,17 @@ import User from './User.vue'
                     return this.users
                 }
             }
+        },
+        methods: {
+            updateUserList(){
+            axios
+                .get("http://localhost:3000/user",
+                { withCredentials: true, "Access-Control-Allow-Origin": "http://localhost:3000" })
+                .then(res => this.users = res.data)
+        },
+        detailUser(user){
+            this.$emit('detailUser', user)
+        }
         }
     }
 </script>

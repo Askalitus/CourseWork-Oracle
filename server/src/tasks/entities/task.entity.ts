@@ -13,7 +13,7 @@ export class Task {
     @Column()
     description: number
 
-    @ManyToOne(type => User, user => user.id, { cascade: true, onDelete: "CASCADE", onUpdate: "CASCADE"})
+    @ManyToOne(type => User, user => user.id, { cascade: true, onDelete: "SET NULL", onUpdate: "SET NULL"})
     @JoinColumn({name: 'worker', referencedColumnName: 'id', foreignKeyConstraintName: 'workerId'})
     @Column({nullable: true})
     worker: number

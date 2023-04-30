@@ -187,8 +187,10 @@ export default {
     },
   },
   mounted() {
-    this.problem = this.task.problem;
-    this.cabinet = this.task.cabinet;
+    if(this.task.problem){
+      this.problem = this.task.problem;
+      this.cabinet = this.task.cabinet;
+    }
 
     if (!this.task.worker) {
       this.selected_worker = "Выберите ответственного";
@@ -267,12 +269,20 @@ export default {
                 status: 1,
               },
               { withCredentials: true }
-            );
-            this.$emit("closePopup", { popup: false });
+              ).then(res => this.$emit("closePopup", { popup: false }));
           });
       }
     },
     updateTask() {
+      if (!this.problem.trim()) {
+        this.error = "Опишите проблему!";
+      } else if (
+        !this.cabinet.trim() ||
+        this.cabinet.length > 4 ||
+        this.cabinet.length < 3
+      ) {
+        this.error = "Введите корректный кабинет!";
+      } else {
       axios
         .patch(
           "http://localhost:3000/task-desc/" + this.task.description,
@@ -283,6 +293,7 @@ export default {
           { withCredentials: true }
         )
         .then(() => this.$emit("closePopup", { popup: false }));
+      }
     },
     deleteTask() {
       axios

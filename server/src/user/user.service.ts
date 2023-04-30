@@ -34,7 +34,6 @@ export class UserService {
     user.surname = createUserDto.surname;
     user.patronymic = createUserDto.patronymic;
     user.role = createUserDto.role;
-    console.log(file)
     if(file){
       user.photo = file.filename
     }

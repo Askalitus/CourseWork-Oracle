@@ -1,5 +1,6 @@
+import { Task } from "src/tasks/entities/task.entity";
 import { User } from "src/user/entities/user.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class TaskDesc {
@@ -16,5 +17,10 @@ export class TaskDesc {
 
     @Column("varchar", { length: 4, nullable: false})
     cabinet: string
+
+    @OneToOne(type => Task, { cascade: true, onDelete: "CASCADE", onUpdate: "CASCADE" })
+    @JoinColumn({name: 'task', referencedColumnName: 'id', foreignKeyConstraintName: 'taskId'})
+    @Column({nullable: true})
+    task: number
 
 }
