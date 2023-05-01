@@ -143,7 +143,7 @@ export default {
   display: flex;
   margin-top: 75px;
   justify-content: center;
-  /* height: 100%; */
+  min-height: 78.7vh;
 }
 .viniet {
   position: fixed;

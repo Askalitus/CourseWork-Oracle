@@ -1,27 +1,27 @@
 <template> 
   <div class="container" @mousemove="movePupil">
-    <div class="eye" :style="{ transform: rotate1 }" id="eye1" @click="month">
-      <div class="eyelidsOpen" :class="{ eyelidsClose: eyelidsClose }"></div>
-      <div class="pupil"></div>
+    <div :class="{darkEye: darkMode, lightEye: lightMode}" :style="{ transform: rotate1 }" id="eye1" @click="month">
+      <div class="eyelidsOpen" :class="{ darkEyelidsClose: eyelidsClose }"></div>
+      <div :class="{darkPupil: darkMode, lightPupil: lightMode}"></div>
     </div>
     <div class="center">
-      <div class="form">
-        <h1 class="form_title">Добро пожаловать!</h1>
-        <p class="form__text">Пожалуйста, войдите в свой рабочий аккаунт.</p>
+      <div :class="{darkForm: darkMode, lightForm: lightMode}">
+        <h1 :class="{darkForm_title: darkMode, lightForm_title: lightMode}">Добро пожаловать!</h1>
+        <p :class="{darkForm__text: darkMode, lightForm__text: lightMode}">Пожалуйста, войдите в свой рабочий аккаунт.</p>
         <div class="inputs">
-          <input type="text" class="text_input" placeholder="Ваш логин" v-model="username">
-          <input type="password" class="text_input" placeholder="Ваш пароль" v-model="password">
+          <input type="text" :class="{darkText_input: darkMode, lightText_input: lightMode}" placeholder="Ваш логин" v-model="username">
+          <input type="password" :class="{darkText_input: darkMode, lightText_input: lightMode}" placeholder="Ваш пароль" v-model="password">
           <div class="text_error" v-if="error">
             <p>Введен неправильный логиин или пароль!</p>
           </div>
         </div>
-        <button class="btn" @click="login">Войти</button>
+        <button :class="{darkBtn: darkMode, lightBtn: lightMode}" @click="login">Войти</button>
       </div>
-      <div class="monthNormal" :class="{monthO: monthO}"></div>
+      <div :class="{monthO: monthO, darkMonthNormal: darkMode, lightMonthNormal: lightMode}"></div>
     </div>
-    <div class="eye" :style="{ transform: rotate2 }" id="eye2"  @click="month">
-      <div class="eyelidsOpen" :class="{ eyelidsClose: eyelidsClose }"></div>
-      <div class="pupil"></div>
+    <div :class="{darkEye: darkMode, lightEye: lightMode}" :style="{ transform: rotate2 }" id="eye2"  @click="month">
+      <div class="eyelidsOpen" :class="{ darkEyelidsClose: eyelidsClose }"></div>
+      <div :class="{darkPupil: darkMode, lightPupil: lightMode}"></div>
     </div>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
       error: false
     }
   },
-  props: {x: Number, y: Number},
+  props: { x: Number, y: Number, darkMode: Boolean, lightMode: Boolean },
   methods: {
     month(){
       this.monthO = !this.monthO
@@ -120,7 +120,8 @@ export default {
 </script>
 
 <style scoped>
-  .form{
+/* dark mode start */
+.darkForm{
     background: #323232;
     border-radius: 0.78125vw;
     padding: 3.703703703704vh 4.375vw;
@@ -128,34 +129,19 @@ export default {
     flex-direction: column;
     align-items: center;
   }
-  .container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
-  .form_title{
+  .darkForm_title{
     color: rgba(20, 255, 236, 1);
     font-weight: 500;
     font-size: 2.08333333vw;
     margin-bottom: 0.9259259259259vh;
   }
-  .form__text{
+  .darkForm__text{
     font-weight: 400;
     font-size: 0.833333333vw;
     color: white;
     margin-bottom: 3.703703703704vh;
   }
-  .inputs{
-    display: flex;
-    flex-direction: column;
-    gap: 0.9259259259259vh;
-    margin-bottom: 3.703703703704vh;
-  }
-  .text_input::placeholder{
-    font-size: 0.833333333vw;
-  }
-  .text_input{
+  .darkText_input{
     width: 22.7604167vw;
     height: 4.62962963vh;
     background: #212121;
@@ -165,7 +151,7 @@ export default {
     color: white;
     font-size: 0.833333333vw;
   }
-  .btn{
+  .darkBtn{
     width: 7.8125vw;
     height: 4.62962962963vh;
     background: #212121;
@@ -176,13 +162,13 @@ export default {
     font-size: 0.8333333333333vw;
     cursor: pointer;
   }
-  .btn:hover{
+  .darkBtn:hover{
     color: rgba(20, 255, 236, 1);
   }
-  .btn:active{
+  .darkBtn:active{
     box-shadow: inset 0px 5px 14px rgba(0, 0, 0, 0.5), inset 0px -5px 12px rgba(0, 0, 0, 0.5);
   }
-  .eye{
+  .darkEye{
     position: relative;
     background: #0D7377;
     border: 2px solid #14FFEC;
@@ -193,7 +179,7 @@ export default {
     float: left;
     cursor: pointer;
   }
-  .pupil{
+  .darkPupil{
     position: absolute;
     right: 0;
     bottom: 47.79%;
@@ -204,6 +190,125 @@ export default {
     border-radius: 100%;
     z-index: -1;
   }
+  .darkEyelidsClose{
+    transition: 0.1s;
+    box-shadow: inset #14FFEC 0px 100px 0px 0px, inset #14FFEC 0px -100px 0px 0px;
+    z-index: 1;
+  }
+  .darkMonthNormal{
+    background: #0D7377;
+    width: 9.479166666667vw;
+    height: 8.425925925926vh;
+    border-radius: 0px 0px 100% 100%;
+    transition: 0.1s;
+    border: 2px solid #14FFEC;
+  }
+/* dark mode end */
+
+/* light mode start */
+.lightForm{
+    background: #fff;
+    border-radius: 0.78125vw;
+    padding: 3.703703703704vh 4.375vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .lightForm_title{
+    color: black;
+    font-weight: 500;
+    font-size: 2.08333333vw;
+    margin-bottom: 0.9259259259259vh;
+  }
+  .lightForm__text{
+    font-weight: 400;
+    font-size: 0.833333333vw;
+    color: black;
+    margin-bottom: 3.703703703704vh;
+  }
+  .lightText_input{
+    width: 22.7604167vw;
+    height: 4.62962963vh;
+    background: #0DCEDA;
+    border: none;
+    border-radius: 0.78125vw;
+    padding-left: 0.8333333333333vw;
+    color: black;
+    font-size: 0.833333333vw;
+  }
+  .lightText_input::placeholder{
+    color: black;
+  }
+  .lightBtn{
+    width: 7.8125vw;
+    height: 4.62962962963vh;
+    background: #0DCEDA;
+    box-shadow: inset 0px 6px 10px #69F6FF, inset 0px -3px 10px #119DA6;
+    border-radius: 0.78125vw;
+    border: none;
+    color: white;
+    font-size: 0.8333333333333vw;
+    cursor: pointer;
+  }
+  .lightBtn:hover{
+    color: black;
+  }
+  .lightBtn:active{
+    box-shadow: inset 0px 5px 14px rgba(0, 0, 0, 0.5), inset 0px -5px 12px rgba(0, 0, 0, 0.5);
+  }
+  .lightEye{
+    position: relative;
+    background: #fff;
+    border: 2px solid #000;
+    box-shadow: inset 0px 24px 15px #f5f5f5, inset 0px -19px 15px #f1f1f1;
+    width: 10vw;
+    height: 10vw;
+    border-radius: 100%;
+    float: left;
+    cursor: pointer;
+  }
+  .lightPupil{
+    position: absolute;
+    right: 0;
+    bottom: 47.79%;
+    background: #000;
+    box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.25), inset 0px 5px 4px rgba(20, 20, 20, 0.25), inset 0px -5px 6px rgba(0, 0, 0, 0.25);
+    width: 2.239583333333vw;
+    height: 2.239583333333vw;
+    border-radius: 100%;
+    z-index: -1;
+  }
+  .lightEyelidsClose{
+    transition: 0.1s;
+    box-shadow: inset #14FFEC 0px 100px 0px 0px, inset #14FFEC 0px -100px 0px 0px;
+    z-index: 1;
+  }
+  .lightMonthNormal{
+    background: #fff;
+    width: 9.479166666667vw;
+    height: 8.425925925926vh;
+    border-radius: 0px 0px 100% 100%;
+    transition: 0.1s;
+    border: 2px solid #000;
+  }
+/* light mode end */
+  
+  .container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+  }
+
+  .inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 0.9259259259259vh;
+    margin-bottom: 3.703703703704vh;
+  }
+  input::placeholder{
+    font-size: 0.833333333vw;
+  }
   .eyelidsOpen{
     width: 10vw;
     height: 10vw;
@@ -211,19 +316,6 @@ export default {
     border-radius: 100%;
     z-index: 1;
     transition: 0.1s;
-  }
-  .eyelidsClose{
-    transition: 0.1s;
-    box-shadow: inset #14FFEC 0px 100px 0px 0px, inset #14FFEC 0px -100px 0px 0px;
-    z-index: 1;
-  }
-  .monthNormal{
-    background: #0D7377;
-    width: 9.479166666667vw;
-    height: 8.425925925926vh;
-    border-radius: 0px 0px 100% 100%;
-    transition: 0.1s;
-    border: 2px solid #14FFEC;
   }
   .monthO{
     border-radius: 100%;
