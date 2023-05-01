@@ -48,6 +48,9 @@ import Users from '../components/Users.vue';
 <style scoped>
     .users__container{
         width: 32.1875vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
     }
     .button__panel {
   width: 34.8958333vw;
@@ -80,17 +83,5 @@ button:active {
 .action{
   font-size: 2.08333333vw;
   color: white;
-}
-
-.viniet {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 </style>

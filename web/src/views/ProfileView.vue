@@ -143,7 +143,7 @@ export default {
   display: flex;
   margin-top: 75px;
   justify-content: center;
-  height: 100%;
+  /* height: 100%; */
 }
 .viniet {
   position: fixed;
@@ -165,6 +165,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: start;
+  align-items: start;
 }
 .profile_card {
   margin-right: 6.77083333vw;

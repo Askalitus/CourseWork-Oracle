@@ -110,7 +110,7 @@
           </div>
         </div>
         <div class="item">
-          <p class="title">Ответственный</p>
+          <p class="title">Ответственный<span>*</span></p>
           <select class="select" v-model="selected_worker">
             <option v-for="worker in workerList" :key="worker">
               {{ worker }}
@@ -193,7 +193,7 @@ export default {
     }
 
     if (!this.task.worker) {
-      this.selected_worker = "Выберите ответственного";
+      this.selected_worker = "";
     }
     axios
       .post("http://localhost:3000/user/role", {}, { withCredentials: true })
@@ -330,17 +330,21 @@ export default {
         .then(() => this.$emit("closePopup", { popup: false }));
     },
     selectWorker() {
-      axios
-        .patch(
-          "http://localhost:3000/tasks/" + this.task.id,
-          {
-            worker: Number(this.selected_worker.split(" ")[0]),
-            status: 2,
-            comment: this.task.comment,
-          },
-          { withCredentials: true }
-        )
-        .then(() => this.$emit("closePopup", { popup: false }));
+      if(!this.selected_worker){
+        this.error = 'Выберите ответственного!'
+      }else{
+        axios
+          .patch(
+            "http://localhost:3000/tasks/" + this.task.id,
+            {
+              worker: Number(this.selected_worker.split(" ")[0]),
+              status: 2,
+              comment: this.task.comment,
+            },
+            { withCredentials: true }
+          )
+          .then(() => this.$emit("closePopup", { popup: false }));
+      }
     },
     updateWorker(){
       axios
@@ -494,4 +498,7 @@ button:active {
   font-size: 0.833333333vw;
   margin-top: 0.462962963vh;
 }
+span{
+        color: rgb(187, 15, 15);
+    }
 </style>

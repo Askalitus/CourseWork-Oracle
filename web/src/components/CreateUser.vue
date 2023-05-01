@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+        <div class="error" v-if="error">
+            <p>{{ error }}</p>
+        </div>
         <div class="top">
             <div class="file">
                 <p class="title">Изображение</p>
@@ -12,31 +15,31 @@
         <div class="wrapper">
             <div class="column">
                 <div class="item">
-                    <p class="title">Имя</p>
+                    <p class="title">Имя<span>*</span></p>
                     <input type="text" v-model="name" placeholder="Имя" class="input">
                 </div>
                 <div class="item">
-                    <p class="title">Фамилия</p>
+                    <p class="title">Фамилия<span>*</span></p>
                     <input type="text" v-model="surname" placeholder="Фамилия" class="input">
                 </div>
                 <div class="item">
-                    <p class="title">Отчество</p>
+                    <p class="title">Отчество<span>*</span></p>
                     <input type="text" v-model="patronymic" placeholder="Отчество" class="input">
                 </div>
             </div>
             <div class="column">
                 <div class="item">
-                    <p class="title">Роль</p>
+                    <p class="title">Роль<span>*</span></p>
                     <select v-model="role">
                         <option v-for="role in roleList" :key="role" selected>{{ role }}</option>
                     </select>
                 </div>
                 <div class="item">
-                    <p class="title">Логин</p>
+                    <p class="title">Логин<span>*</span></p>
                     <input type="text" v-model="login" placeholder="Логин" class="input">
                 </div>
                 <div class="item">
-                    <p class="title">Пароль</p>
+                    <p class="title">Пароль<span>*</span></p>
                     <input type="text" v-model="password" placeholder="Пароль" class="input">
                 </div>
             </div>
@@ -59,25 +62,38 @@ import axios from 'axios'
                 file: '',
                 userInfo: {},
 
-                roles: []
+                roles: [],
+                error: '',
+                users: []
             }
         },
         methods:{
             createUser(){
-                axios
-                .post("http://localhost:3000/user",
-                    { 
-                        name: this.name,
-                        surname: this.surname,
-                        patronymic: this.patronymic,
-                        role: this.role.split(' ')[0],
-                        password: this.password,
-                        login: this.login
+                if(!this.name || !this.surname || !this.patronymic || !this.role || !this.login || !this.password){
+                    this.error = 'Заполните все обязательные поля!'
+                }
+                else if (this.password.trim().length < 8){
+                    this.error = 'В пароле должно быть 8 и более символов!'
+                }
+                else if(this.loginList.some(el => el == this.login)){
+                    this.error = 'Пользователь с таким логином уже существует!'
+                }
+                else{
+                    axios
+                    .post("http://localhost:3000/user",
+                        { 
+                            name: this.name.trim(),
+                            surname: this.surname.trim(),
+                            patronymic: this.patronymic.trim(),
+                            role: this.role.split(' ')[0],
+                            password: this.password.trim(),
+                            login: this.login.trim()
 
-                    },
-                    { withCredentials: true, headers: {"Access-Control-Allow-Origin": "http://localhost:3000", 'Content-Type': 'multipart/form-data'} }
-                )
-                .then((res) => {this.$emit('toggleCreate')});
+                        },
+                        { withCredentials: true, headers: {"Access-Control-Allow-Origin": "http://localhost:3000", 'Content-Type': 'multipart/form-data'} }
+                    )
+                    .then((res) => {this.$emit('toggleCreate')});
+                }
             },
             updateUser(){
                 let role = ''
@@ -102,6 +118,11 @@ import axios from 'axios'
             }
         },
         mounted(){
+            axios
+                .get("http://localhost:3000/user",
+                { withCredentials: true, "Access-Control-Allow-Origin": "http://localhost:3000" })
+                .then(res => this.users = res.data)
+
             if(this.user){
                 this.name = this.user.name
                 this.surname = this.user.surname
@@ -120,6 +141,9 @@ import axios from 'axios'
         computed: {
             roleList(){
                 return this.roles.map(el => el.id + ' ' + el.role_name)
+            },
+            loginList(){
+                return this.users.map(el => el.login)
             }
         }
     }
@@ -127,8 +151,8 @@ import axios from 'axios'
 
 <style scoped>
     .container{
+        height: auto;
         width: 31.770833vw;
-        height: 41.6666667vh;
         background: #323232;
         border-radius: 0.78125vw;
         padding: 1.5625vw;
@@ -177,24 +201,38 @@ import axios from 'axios'
         justify-content: space-between;
         align-items: end;
     }
+
     button {
-  padding: 1.38888889vh 1.82291667vw;
-  background: #212121;
-  box-shadow: inset 0px 6px 10px rgba(63, 63, 63, 0.5),
-    inset 0px -3px 10px rgba(0, 0, 0, 0.5);
-  border-radius: 0.78125vw;
-  border: none;
-  color: white;
-  font-size: 0.8333333333333vw;
-  cursor: pointer;
-}
+    padding: 1.38888889vh 1.82291667vw;
+    background: #212121;
+    box-shadow: inset 0px 6px 10px rgba(63, 63, 63, 0.5),
+        inset 0px -3px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 0.78125vw;
+    border: none;
+    color: white;
+    font-size: 0.8333333333333vw;
+    cursor: pointer;
+    }
 
-button:hover {
-  color: rgba(20, 255, 236, 1);
-}
+    button:hover {
+    color: rgba(20, 255, 236, 1);
+    }
 
-button:active {
-  box-shadow: inset 0px 5px 14px rgba(0, 0, 0, 0.5),
-    inset 0px -5px 12px rgba(0, 0, 0, 0.5);
-}
+    button:active {
+    box-shadow: inset 0px 5px 14px rgba(0, 0, 0, 0.5),
+        inset 0px -5px 12px rgba(0, 0, 0, 0.5);
+    }
+    .error {
+    width: 100%;
+    padding: 1.48148148vh 0 1.48148148vh 0.833333333vw;
+    background: rgba(106, 8, 8, 1);
+    border: none;
+    border-radius: 0.78125vw;
+    color: white;
+    font-size: 0.833333333vw;
+    margin-bottom: 10px;
+    }
+    span{
+        color: rgb(187, 15, 15);
+    }
 </style>

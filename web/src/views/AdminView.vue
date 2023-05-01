@@ -56,5 +56,6 @@ p{
         flex-direction: column;
         gap: 30px;
         align-items: start;
+        justify-content: start;
     }
 </style>
