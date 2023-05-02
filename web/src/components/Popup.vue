@@ -214,25 +214,7 @@ export default {
           axios
             .get("http://localhost:3000/user", { withCredentials: true })
             .then((res) => {
-              if (!this.task.worker) {
                 this.workers = res.data.filter((us) => us.role == 2);
-              } else {
-                this.workers = res.data.filter((us) => us.role == 2);
-                let wrk = this.workers.filter(
-                  (us) => us.id == this.task.worker
-                );
-                this.selected_worker =
-                  wrk[0].id +
-                  " " +
-                  wrk[0].surname +
-                  " " +
-                  wrk[0].name +
-                  " " +
-                  wrk[0].patronymic;
-                this.workers = this.workers.filter(
-                  (us) => us.id != this.task.worker
-                );
-              }
             });
         }
       });
