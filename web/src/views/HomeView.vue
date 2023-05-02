@@ -221,7 +221,7 @@ export default {
     margin-bottom: 0.9259259259259vh;
   }
   .lightForm__text{
-    font-weight: 400;
+    font-weight: 500;
     font-size: 0.833333333vw;
     color: black;
     margin-bottom: 3.703703703704vh;
@@ -248,6 +248,7 @@ export default {
     border: none;
     color: white;
     font-size: 0.8333333333333vw;
+    font-weight: 700;
     cursor: pointer;
   }
   .lightBtn:hover{

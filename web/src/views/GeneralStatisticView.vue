@@ -1,28 +1,28 @@
 <template>
-    <div class="container">
+    <div :class="{darkContainer: darkMode, lightContainer: lightMode}">
         <div class="wrapper">
             <div class="column">
                 <div class="item">
-                    <p class="title">Всего заданий</p>
-                    <p class="desc">{{allTasks}}</p>
+                    <p :class="{darkTitle: darkMode, lightTitle: lightMode}">Всего заданий</p>
+                    <p :class="{darkDesc: darkMode, lightDesc: lightMode}">{{allTasks}}</p>
                 </div>
                 <div class="item">
-                    <p class="title">Заданий в обработке</p>
-                    <p class="desc">{{ proccessTasks }}</p>
+                    <p :class="{darkTitle: darkMode, lightTitle: lightMode}">Заданий в обработке</p>
+                    <p :class="{darkDesc: darkMode, lightDesc: lightMode}">{{ proccessTasks }}</p>
                 </div>
                 <div class="item">
-                    <p class="title">Проблемный кабинет</p>
-                    <p class="desc">{{problemCabinet}}</p>
+                    <p :class="{darkTitle: darkMode, lightTitle: lightMode}">Проблемный кабинет</p>
+                    <p :class="{darkDesc: darkMode, lightDesc: lightMode}">{{problemCabinet}}</p>
                 </div>
             </div>
             <div class="column">
                 <div class="item">
-                    <p class="title">Принятых Заданий</p>
-                    <p class="desc">{{ allowTasks }}</p>
+                    <p :class="{darkTitle: darkMode, lightTitle: lightMode}">Принятых Заданий</p>
+                    <p :class="{darkDesc: darkMode, lightDesc: lightMode}">{{ allowTasks }}</p>
                 </div>
                 <div class="item">
-                    <p class="title">Готовых заданий</p>
-                    <p class="desc">{{ readyTasks }}</p>
+                    <p :class="{darkTitle: darkMode, lightTitle: lightMode}">Готовых заданий</p>
+                    <p :class="{darkDesc: darkMode, lightDesc: lightMode}">{{ readyTasks }}</p>
                 </div>
             </div>
         </div>
@@ -32,6 +32,7 @@
 <script>
 import axios from 'axios';
     export default {
+        props: { darkMode: Boolean, lightMode: Boolean },
         data() {
             return {
                 tasks: []
@@ -91,7 +92,8 @@ import axios from 'axios';
 </script>
 
 <style scoped>
-    .container{
+/* dark mode start */
+    .darkContainer{
         width: 31.770833vw;
         height: 38vh;
         background: #323232;
@@ -99,6 +101,44 @@ import axios from 'axios';
         padding: 1.5625vw;
         margin-top: 30px;
     }
+    .darkTitle{
+        font-size: 1.04166667vw;
+        color: white;
+    }
+    .darkDesc{
+        width: 8.75vw;
+        padding: 0.833333333vw;
+        background: #212121;
+        border-radius: 15px; 
+        border: none;
+        margin-top: 5px;
+        color: white;   
+    }
+/* dark mode end */
+
+/* light mode start */
+.lightContainer{
+        width: 31.770833vw;
+        height: 38vh;
+        background: #fff;
+        border-radius: 0.78125vw;
+        padding: 1.5625vw;
+        margin-top: 30px;
+    }
+    .lightTitle{
+        font-size: 1.04166667vw;
+        color: black;
+    }
+    .lightDesc{
+        width: 8.75vw;
+        padding: 0.833333333vw;
+        background: #0DCEDA;
+        border-radius: 15px; 
+        border: none;
+        margin-top: 5px;
+        color: black;   
+    }
+/* light mode end */
     .wrapper{
         display: flex;
         justify-content: space-between;  
@@ -107,18 +147,5 @@ import axios from 'axios';
         display: flex;
         flex-direction: column;
         gap: 1.38888889vh;
-    }
-    .title{
-        font-size: 1.04166667vw;
-        color: white;
-    }
-    .desc{
-        width: 8.75vw;
-        padding: 0.833333333vw;
-        background: #212121;
-        border-radius: 15px; 
-        border: none;
-        margin-top: 5px;
-        color: white;   
     }
 </style>

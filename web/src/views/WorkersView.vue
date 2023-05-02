@@ -1,7 +1,7 @@
 <template>
     <div class="workers">
         <div v-for="worker in workersList" :key="worker.id">
-            <worker :worker="worker" />
+            <worker :worker="worker" :darkMode="darkMode" :lightMode="lightMode" />
         </div>
     </div>
 </template>
@@ -12,6 +12,7 @@ import Worker from '../components/Worker.vue';
 
     export default {
   components: { Worker },
+  props: {darkMode: Boolean, lightMode: Boolean},
         data() {
             return {
                 users: []

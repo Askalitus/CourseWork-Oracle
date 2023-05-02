@@ -1,8 +1,8 @@
 <template>
     <div class="users">
-        <input type="text" v-model="search" class="search" placeholder="Поиск по ФИО">
+        <input type="text" v-model="search" :class="{darkSearch: darkMode, lightSearch: lightMode}" placeholder="Поиск по ФИО">
         <div v-for="user in searchResult" :key="user">
-            <user :user="user" @updateUserList="updateUserList" @detailUser="detailUser($event)" />
+            <user :darkMode="darkMode" :lightMode="lightMode" :user="user" @updateUserList="updateUserList" @detailUser="detailUser($event)" />
         </div>
     </div>
 </template>
@@ -12,6 +12,7 @@ import axios from 'axios'
 import User from './User.vue'
     export default {
         components: { User },
+        props: {darkMode: Boolean, lightMode: Boolean},
         data(){
             return{
                 users: [],
@@ -62,12 +63,25 @@ import User from './User.vue'
         gap: 20px;
         width: 100%;
     }
-    .search{
+    /* dark mode start */
+    .darkSearch{
     width: 33.2291667vw;
     padding: 0.833333333vw;
     background: #323232;
     border-radius: 15px; 
     border: none;
     color: white;
-}
+    }
+    /* dark mode end */
+
+    /* light mode start */
+    .lightSearch{
+    width: 33.2291667vw;
+    padding: 0.833333333vw;
+    background: white;
+    border-radius: 15px; 
+    border: none;
+    color: black;
+    }
+    /* light mode end */
 </style>

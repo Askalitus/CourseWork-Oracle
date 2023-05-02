@@ -1,46 +1,46 @@
 <template>
-    <div class="container">
+    <div :class="{darkContainer: darkMode, lightContainer: lightMode}">
         <div class="error" v-if="error">
             <p>{{ error }}</p>
         </div>
         <div class="top">
             <div class="file">
-                <p class="title">Изображение</p>
-                <input type="file" class="file_loader" name="image" accept="image/*" ref="file" id="file">
+                <p :class="{darkTitle: darkMode, lightTitle: lightMode}">Изображение</p>
+                <input type="file" :class="{darkFile_loader: darkMode, lightFile_loader: lightMode}" name="image" accept="image/*" ref="file" id="file">
             </div>
-            <button @click="createUser" v-if="!user.name">Создать</button>
-            <button @click="updateUser" v-if="user.name">Изменить</button>
+            <button :class="{darkButton: darkMode, lightButton: lightMode}" @click="createUser" v-if="!user.name">Создать</button>
+            <button :class="{darkButton: darkMode, lightButton: lightMode}" @click="updateUser" v-if="user.name">Изменить</button>
         </div>
 
         <div class="wrapper">
             <div class="column">
                 <div class="item">
-                    <p class="title">Имя<span>*</span></p>
-                    <input type="text" v-model="name" placeholder="Имя" class="input">
+                    <p :class="{darkTitle: darkMode, lightTitle: lightMode}">Имя<span>*</span></p>
+                    <input type="text" v-model="name" placeholder="Имя" :class="{darkInput: darkMode, lightInput: lightMode}">
                 </div>
                 <div class="item">
-                    <p class="title">Фамилия<span>*</span></p>
-                    <input type="text" v-model="surname" placeholder="Фамилия" class="input">
+                    <p :class="{darkTitle: darkMode, lightTitle: lightMode}">Фамилия<span>*</span></p>
+                    <input type="text" v-model="surname" placeholder="Фамилия" :class="{darkInput: darkMode, lightInput: lightMode}">
                 </div>
                 <div class="item">
-                    <p class="title">Отчество<span>*</span></p>
-                    <input type="text" v-model="patronymic" placeholder="Отчество" class="input">
+                    <p :class="{darkTitle: darkMode, lightTitle: lightMode}">Отчество<span>*</span></p>
+                    <input type="text" v-model="patronymic" placeholder="Отчество" :class="{darkInput: darkMode, lightInput: lightMode}">
                 </div>
             </div>
             <div class="column">
                 <div class="item">
-                    <p class="title">Роль<span>*</span></p>
-                    <select v-model="role">
+                    <p :class="{darkTitle: darkMode, lightTitle: lightMode}">Роль<span>*</span></p>
+                    <select v-model="role" :class="{darkSelect: darkMode, lightSelect: lightMode}">
                         <option v-for="role in roleList" :key="role" selected>{{ role }}</option>
                     </select>
                 </div>
                 <div class="item">
-                    <p class="title">Логин<span>*</span></p>
-                    <input type="text" v-model="login" placeholder="Логин" class="input">
+                    <p :class="{darkTitle: darkMode, lightTitle: lightMode}">Логин<span>*</span></p>
+                    <input type="text" v-model="login" placeholder="Логин" :class="{darkInput: darkMode, lightInput: lightMode}">
                 </div>
                 <div class="item">
-                    <p class="title">Пароль<span>*</span></p>
-                    <input type="text" v-model="password" placeholder="Пароль" class="input">
+                    <p :class="{darkTitle: darkMode, lightTitle: lightMode}">Пароль<span>*</span></p>
+                    <input type="text" v-model="password" placeholder="Пароль" :class="{darkInput: darkMode, lightInput: lightMode}">
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
 <script>
 import axios from 'axios'
     export default {
-        props: { user: Object },
+        props: { user: Object, darkMode: Boolean, lightMode: Boolean },
         data(){
             return{
                 name: '',
@@ -150,28 +150,19 @@ import axios from 'axios'
 </script>
 
 <style scoped>
-    .container{
+/* dark mode start */
+.darkContainer{
         height: auto;
         width: 31.770833vw;
         background: #323232;
         border-radius: 0.78125vw;
         padding: 1.5625vw;
     }
-    .wrapper{
-        display: flex;
-        justify-content: space-between;
-        margin-top: 30px;   
-    }
-    .column{
-        display: flex;
-        flex-direction: column;
-        gap: 1.38888889vh;
-    }
-    .title{
+    .darkTitle{
         font-size: 1.04166667vw;
         color: white;
     }
-    .input{
+    .darkInput{
         width: 8.75vw;
         padding: 0.833333333vw;
         background: #212121;
@@ -180,7 +171,7 @@ import axios from 'axios'
         margin-top: 5px;
         color: white;   
     }
-    select{
+    .darkSelect{
         width: 10.4166667vw;
         padding: 0.833333333vw;
         background: #212121;
@@ -189,20 +180,14 @@ import axios from 'axios'
         margin-top: 5px;
         color: white; 
     }
-    option{
+    .darkSelect option{
         color: white;
     }
-    .file_loader{
+    .darkFile_loader{
         color: white;
         margin-top: 5px;
     }
-    .top{
-        display: flex;
-        justify-content: space-between;
-        align-items: end;
-    }
-
-    button {
+    .darkButton {
     padding: 1.38888889vh 1.82291667vw;
     background: #212121;
     box-shadow: inset 0px 6px 10px rgba(63, 63, 63, 0.5),
@@ -214,14 +199,90 @@ import axios from 'axios'
     cursor: pointer;
     }
 
-    button:hover {
+    .darkButton:hover {
     color: rgba(20, 255, 236, 1);
     }
 
-    button:active {
+    .darkButton:active {
     box-shadow: inset 0px 5px 14px rgba(0, 0, 0, 0.5),
         inset 0px -5px 12px rgba(0, 0, 0, 0.5);
     }
+/* dark mode end */
+
+/* light mode start */
+.lightContainer{
+        height: auto;
+        width: 31.770833vw;
+        background: #fff;
+        border-radius: 0.78125vw;
+        padding: 1.5625vw;
+    }
+    .lightTitle{
+        font-size: 1.04166667vw;
+        color: black;
+    }
+    .lightInput{
+        width: 8.75vw;
+        padding: 0.833333333vw;
+        background: #0DCEDA;
+        border-radius: 15px; 
+        border: none;
+        margin-top: 5px;
+        color: black;   
+    }
+    .lightSelect{
+        width: 10.4166667vw;
+        padding: 0.833333333vw;
+        background: #0DCEDA;
+        border-radius: 15px; 
+        border: none;
+        margin-top: 5px;
+        color: black; 
+    }
+    .lightSelect option{
+        color: black;
+    }
+    .lightFile_loader{
+        color: black;
+        margin-top: 5px;
+    }
+    .lightButton {
+    padding: 1.38888889vh 1.82291667vw;
+    background: #0DCEDA;
+    box-shadow: inset 0px 6px 10px #69F6FF, inset 0px -3px 10px #119DA6;
+    border-radius: 0.78125vw;
+    border: none;
+    color: white;
+    font-size: 0.8333333333333vw;
+    font-weight: 700;
+    cursor: pointer;
+    }
+
+    .lightButton:hover {
+    color: black;
+    }
+
+    .lightButton:active {
+    box-shadow: inset 0px 5px 14px rgba(0, 0, 0, 0.5),
+        inset 0px -5px 12px rgba(0, 0, 0, 0.5);
+    }
+/* light mode end */
+    .wrapper{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;   
+    }
+    .column{
+        display: flex;
+        flex-direction: column;
+        gap: 1.38888889vh;
+    }
+    .top{
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+    }
+
     .error {
     width: 100%;
     padding: 1.48148148vh 0 1.48148148vh 0.833333333vw;

@@ -1,17 +1,18 @@
 <template>
-  <div class="panel">
-    <p>Сортировка:</p>
-    <p class="clickable" @click="sortAll()">Все</p>
-    <p class="clickable" @click="sortNew()">Новые</p>
-    <p class="clickable" @click="sortOld()">Старые</p>
-    <p class="clickable" @click="sortProcess()">В обработке</p>
-    <p class="clickable" @click="sortAllow()">Принятые</p>
-    <p class="clickable" @click="sortReady()">Готовые</p>
+  <div :class="{darkPanel: darkMode, lightPanel: lightMode}">
+    <p :class="{darkP: darkMode, lightP: lightMode}">Сортировка:</p>
+    <p :class="{darkClickable: darkMode, lightClickable: lightMode}" @click="sortAll()">Все</p>
+    <p :class="{darkClickable: darkMode, lightClickable: lightMode}" @click="sortNew()">Новые</p>
+    <p :class="{darkClickable: darkMode, lightClickable: lightMode}" @click="sortOld()">Старые</p>
+    <p :class="{darkClickable: darkMode, lightClickable: lightMode}" @click="sortProcess()">В обработке</p>
+    <p :class="{darkClickable: darkMode, lightClickable: lightMode}" @click="sortAllow()">Принятые</p>
+    <p :class="{darkClickable: darkMode, lightClickable: lightMode}" @click="sortReady()">Готовые</p>
   </div>
 </template>
 
 <script>
 export default {
+    props: {darkMode: Boolean, lightMode: Boolean},
     data(){
         return{}
     },
@@ -39,27 +40,52 @@ export default {
 </script>
 
 <style scoped>
-.panel{
+/* dark mode start */
+.darkPanel{
     background-color: #323232;
     padding: 1.57407407vh 0.885416667vw;
     display: flex;
     gap: 1.04166667vw;
     border-radius: 0.78125vw;
 }
-p{
+.darkP{
     font-size: 0.78125vw;
     font-weight: 700;
     color: white;
 }
-.clickable{
-    font-size: 0.729166667vw;
-    font-weight: 500;
-}
-.clickable:hover{
+.darkClickable:hover{
     color: #14FFEC;
     cursor: pointer;
 }
-.selected{
-        color: #14FFEC;
-    }
+.darkClickable{
+    font-size: 0.729166667vw;
+    font-weight: 500;
+    color: white;
+}
+/* dark mode end */
+
+/* light mode start */
+.lightPanel{
+    background-color: #fff;
+    padding: 1.57407407vh 0.885416667vw;
+    display: flex;
+    gap: 1.04166667vw;
+    border-radius: 0.78125vw;
+}
+.lightP{
+    font-size: 0.78125vw;
+    font-weight: 700;
+    color: black;
+}
+.lightClickable:hover{
+    color: #119DA6;
+    cursor: pointer;
+}
+.lightClickable{
+    font-size: 0.729166667vw;
+    font-weight: 500;
+    color: black;
+}
+/* light mode end */
+
 </style>

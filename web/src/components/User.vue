@@ -1,12 +1,12 @@
 <template>
     <div>
-        <div class="user">
+        <div :class="{darkUser: darkMode, lightUser: lightMode}">
             <div class="column">
                 <div class="item">
                     <p class="title">Имя:</p>
                     <p class="desc">{{ user.name }}</p>
                 </div>
-                <div class="line"></div>
+                <div :class="{darkLine: darkMode, lightLine: lightMode}"></div>
                 <div class="item">
                     <p class="title">Фамилия:</p>
                     <p class="desc">{{ user.surname }}</p>
@@ -17,27 +17,27 @@
                     <p class="title">Отчество:</p>
                     <p class="desc">{{ user.patronymic }}</p>
                 </div>
-                <div class="line"></div>
+                <div :class="{darkLine: darkMode, lightLine: lightMode}"></div>
                 <div class="item">
                     <p class="title">Роль:</p>
                     <p class="desc">{{ role }}</p>
                 </div>
             </div>
             <div class="column">
-                <button @click="detailUser">
-                    <svg width="30" height="24" viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7.46249 10.2337C7.20749 10.2727 7.01849 10.3342 6.81599 10.4407C6.34799 10.6897 6.02399 11.1247 5.89949 11.6677C5.88149 11.7457 5.87549 11.8477 5.87549 12.0247C5.87549 12.2017 5.88149 12.3037 5.89949 12.3817C6.06749 13.1182 6.61199 13.6522 7.34249 13.7962C7.49699 13.8277 7.86599 13.8232 8.02499 13.7887C8.76449 13.6297 9.33149 13.0342 9.44249 12.2992C9.58349 11.3617 8.98199 10.4797 8.05499 10.2682C7.93049 10.2397 7.56449 10.2187 7.46249 10.2337Z" fill="#0D7377"/>
-                        <path d="M14.7975 10.2339C14.5455 10.2729 14.3745 10.3269 14.1705 10.4319C13.695 10.6749 13.3515 11.1279 13.236 11.6649C13.215 11.7579 13.209 11.8554 13.209 12.0249C13.209 12.3579 13.257 12.5649 13.407 12.8544C13.65 13.3299 14.103 13.6734 14.64 13.7889C14.817 13.8279 15.183 13.8279 15.36 13.7889C16.0695 13.6359 16.611 13.0929 16.764 12.3849C16.803 12.2079 16.803 11.8419 16.764 11.6649C16.6125 10.9644 16.083 10.4259 15.39 10.2684C15.2655 10.2399 14.8995 10.2189 14.7975 10.2339Z" fill="#0D7377"/>
-                        <path d="M22.1325 10.2339C21.8805 10.2729 21.7095 10.3269 21.5055 10.4319C21.003 10.6884 20.6415 11.1924 20.5575 11.7504C20.4135 12.6999 21.03 13.5849 21.975 13.7889C22.134 13.8234 22.503 13.8279 22.6575 13.7964C23.025 13.7244 23.343 13.5549 23.604 13.2939C23.859 13.0389 24.0165 12.7494 24.1005 12.3819C24.135 12.2289 24.135 11.8209 24.1005 11.6679C23.9385 10.9539 23.4195 10.4274 22.725 10.2684C22.6005 10.2399 22.2345 10.2189 22.1325 10.2339Z" fill="#0D7377"/>
+                <button :class="{darkButton: darkMode, lightButton: lightMode}" @click="detailUser">
+                    <svg width="30" height="24" viewBox="0 0 30 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.46249 10.2337C7.20749 10.2727 7.01849 10.3342 6.81599 10.4407C6.34799 10.6897 6.02399 11.1247 5.89949 11.6677C5.88149 11.7457 5.87549 11.8477 5.87549 12.0247C5.87549 12.2017 5.88149 12.3037 5.89949 12.3817C6.06749 13.1182 6.61199 13.6522 7.34249 13.7962C7.49699 13.8277 7.86599 13.8232 8.02499 13.7887C8.76449 13.6297 9.33149 13.0342 9.44249 12.2992C9.58349 11.3617 8.98199 10.4797 8.05499 10.2682C7.93049 10.2397 7.56449 10.2187 7.46249 10.2337Z"/>
+                        <path d="M14.7975 10.2339C14.5455 10.2729 14.3745 10.3269 14.1705 10.4319C13.695 10.6749 13.3515 11.1279 13.236 11.6649C13.215 11.7579 13.209 11.8554 13.209 12.0249C13.209 12.3579 13.257 12.5649 13.407 12.8544C13.65 13.3299 14.103 13.6734 14.64 13.7889C14.817 13.8279 15.183 13.8279 15.36 13.7889C16.0695 13.6359 16.611 13.0929 16.764 12.3849C16.803 12.2079 16.803 11.8419 16.764 11.6649C16.6125 10.9644 16.083 10.4259 15.39 10.2684C15.2655 10.2399 14.8995 10.2189 14.7975 10.2339Z"/>
+                        <path d="M22.1325 10.2339C21.8805 10.2729 21.7095 10.3269 21.5055 10.4319C21.003 10.6884 20.6415 11.1924 20.5575 11.7504C20.4135 12.6999 21.03 13.5849 21.975 13.7889C22.134 13.8234 22.503 13.8279 22.6575 13.7964C23.025 13.7244 23.343 13.5549 23.604 13.2939C23.859 13.0389 24.0165 12.7494 24.1005 12.3819C24.135 12.2289 24.135 11.8209 24.1005 11.6679C23.9385 10.9539 23.4195 10.4274 22.725 10.2684C22.6005 10.2399 22.2345 10.2189 22.1325 10.2339Z"/>
                     </svg>
                 </button>
-                <button @click="deleteUser">
+                <button :class="{darkButton: darkMode, lightButton: lightMode}" @click="deleteUser">
                     <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                         width="836.000000pt" height="980.000000pt" viewBox="0 0 836.000000 980.000000"
                         preserveAspectRatio="xMidYMid meet">
 
                         <g transform="translate(0.000000,980.000000) scale(0.100000,-0.100000)"
-                        fill="#0D7377" stroke="none">
+                        stroke="none">
                         <path d="M3815 9784 c-387 -59 -687 -165 -938 -331 -96 -64 -252 -222 -300
                         -303 -21 -36 -49 -104 -64 -151 l-26 -86 -405 -6 c-223 -4 -613 -7 -866 -7
                         -254 -1 -530 -5 -615 -10 -154 -9 -155 -9 -240 -51 -128 -63 -228 -168 -304
@@ -69,7 +69,7 @@
 <script>
 import axios from 'axios'
     export default {
-        props: {user: Object},
+        props: {user: Object, darkMode: Boolean, lightMode: Boolean},
         data(){
             return{
                 role: ''
@@ -100,7 +100,8 @@ import axios from 'axios'
 </script>
 
 <style scoped>
-    .user{
+/* dark mode start */
+    .darkUser{
         display: flex;
         align-items: center;
         background-color: #323232;
@@ -110,15 +111,75 @@ import axios from 'axios'
         justify-content: space-between;
         width: 100%;
     }
+    .darkLine{
+        height: 1px;
+        width: 7vw;
+        background-color: white;
+    }
+    .darkButton{
+        width: 2.08333333vw;
+        height: 2.08333333vw;
+        border-radius: 100%;
+        box-shadow: inset 0px 6px 10px rgba(63, 63, 63, 0.5), inset 0px -3px 10px rgba(0, 0, 0, 0.5);
+        border: none;
+        cursor: pointer;
+        background: #212121;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .darkButton:hover path{
+        fill: #14FFEC;
+    }
+
+    .darkButton:active{
+        box-shadow: inset 0px 5px 14px rgba(0, 0, 0, 0.5), inset 0px -5px 12px rgba(0, 0, 0, 0.5);
+    }
+/* dark mode end */
+
+/* light mode start */
+.lightUser{
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        color: black;
+        border-radius: 0.78125vw;
+        padding: 2.40740741vh 1.35416667vw;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .lightLine{
+        height: 1px;
+        width: 7vw;
+        background-color: black;
+    }
+    .lightButton{
+        width: 2.08333333vw;
+        height: 2.08333333vw;
+        border-radius: 100%;
+        box-shadow: inset 0px 6px 10px #69F6FF, inset 0px -3px 10px #119DA6;
+        border: none;
+        cursor: pointer;
+        background: #0DCEDA;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        fill: #fff;
+    }
+
+    .lightButton:hover path{
+        fill: black;
+    }
+
+    .lightButton:active{
+        box-shadow: inset 0px 5px 14px rgba(0, 0, 0, 0.5), inset 0px -5px 12px rgba(0, 0, 0, 0.5);
+    }
+/* light mode end */
     .item{
         display: flex;
         flex-direction: column;
         gap: 5px;
-    }
-    .line{
-        height: 1px;
-        width: 7vw;
-        background-color: white;
     }
     .column{
         display: flex;
@@ -129,30 +190,8 @@ import axios from 'axios'
         font-size: 14px;
         font-weight: 300;
     }
-
-    button{
-  width: 2.08333333vw;
-  height: 2.08333333vw;
-  border-radius: 100%;
-  box-shadow: inset 0px 6px 10px rgba(63, 63, 63, 0.5), inset 0px -3px 10px rgba(0, 0, 0, 0.5);
-  border: none;
-  cursor: pointer;
-  background: #212121;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-svg{
-  width: 1.04166667vw;
-  height: 1.04166667vw;
-}
-
-button:hover path{
-  fill: #14FFEC;
-}
-
-button:active{
-  box-shadow: inset 0px 5px 14px rgba(0, 0, 0, 0.5), inset 0px -5px 12px rgba(0, 0, 0, 0.5);
-}
+    svg{
+        width: 1.04166667vw;
+        height: 1.04166667vw;
+    }
 </style>

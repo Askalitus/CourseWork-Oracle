@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <div class="viniet" v-if="popup">
-      <Popup :action="action" @closePopup="closePopup($event)" :task="task" />
+      <Popup :action="action" @closePopup="closePopup($event)" :task="task" :darkMode="darkMode" :lightMode="lightMode" />
     </div>
     <div class="wrapper">
       <div class="profile_card">
-        <ProfileCard />
+        <ProfileCard :darkMode="darkMode" :lightMode="lightMode" />
       </div>
       <div class="right_side">
         <RouterView
@@ -17,6 +17,8 @@
           @adminPanel="adminPanel"
           @toTask="toTask"
           :tasks="tasks"
+          :darkMode="darkMode"
+          :lightMode="lightMode"
         />
       </div>
     </div>
@@ -30,6 +32,7 @@ import Task from "../components/Task.vue";
 import Popup from "../components/Popup.vue";
 import axios from "axios";
 export default {
+  props: {darkMode: Boolean, lightMode: Boolean},
   components: { ProfileCard, FilterPanel, Task, Popup },
   data() {
     return {
@@ -143,7 +146,7 @@ export default {
   display: flex;
   margin-top: 75px;
   justify-content: center;
-  min-height: 78.7vh;
+  min-height: 82.5vh;
 }
 .viniet {
   position: fixed;
@@ -169,45 +172,5 @@ export default {
 }
 .profile_card {
   margin-right: 6.77083333vw;
-}
-
-.button_panel {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-  margin-top: 2.77777778vh;
-  margin-bottom: 1.85185185vh;
-}
-button {
-  padding: 1.38888889vh 1.82291667vw;
-  background: #212121;
-  box-shadow: inset 0px 6px 10px rgba(63, 63, 63, 0.5),
-    inset 0px -3px 10px rgba(0, 0, 0, 0.5);
-  border-radius: 0.78125vw;
-  border: none;
-  color: white;
-  font-size: 0.8333333333333vw;
-  cursor: pointer;
-}
-
-button:hover {
-  color: rgba(20, 255, 236, 1);
-}
-
-button:active {
-  box-shadow: inset 0px 5px 14px rgba(0, 0, 0, 0.5),
-    inset 0px -5px 12px rgba(0, 0, 0, 0.5);
-}
-
-.filter_text {
-  font-size: 2.08333333vw;
-  color: white;
-}
-
-.task_list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.85185185vh;
 }
 </style>

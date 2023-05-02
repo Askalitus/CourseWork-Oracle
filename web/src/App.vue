@@ -17,6 +17,13 @@
       toggleTheme(){
         this.darkMode = !this.darkMode
         this.lightMode = !this.lightMode
+        if(this.darkMode){
+          document.body.classList.add('darkBody')
+          document.body.classList.remove('lightBody')
+        }else{
+          document.body.classList.add('lightBody')
+          document.body.classList.remove('darkBody')
+        }
       }
     }
   }
@@ -218,7 +225,7 @@
     align-items: center;
   }
 
-  .lighlightBtnModetBtn:hover path{
+  .lightBtnMode:hover path{
   fill: #000;
   }
 

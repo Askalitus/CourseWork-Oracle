@@ -8,14 +8,16 @@
         @sortProccess="sortProccess($event)"
         @sortAllow="sortAllow($event)"
         @sortReady="sortReady($event)"
+        :darkMode="darkMode"
+        :lightMode="lightMode"
       />
     </div>
     <div class="button_panel">
-      <p class="filter_text">{{ filterText }}</p>
-      <button v-if="role == 'user'" @click="createTaskPopup">
+      <p :class="{darkFilter_text: darkMode, lightFilter_text: lightMode}">{{ filterText }}</p>
+      <button :class="{darkButton: darkMode, lightButton: lightMode}" v-if="role == 'user'" @click="createTaskPopup">
         Создать задачу
       </button>
-      <button v-if="role == 'admin'" @click="adminPanel">Админ панель</button>
+      <button :class="{darkButton: darkMode, lightButton: lightMode}" v-if="role == 'admin'" @click="adminPanel">Админ панель</button>
     </div>
     <div class="task_list">
       <div class="task" v-for="task in taskList" :key="task.id">
@@ -25,6 +27,8 @@
           @updateTaskPopup="updateTaskPopup($event)"
           @workerPopup="workerPopup($event)"
           @adminPopup="adminPopup($event)"
+          :darkMode="darkMode"
+          :lightMode="lightMode"
         />
       </div>
     </div>
@@ -37,7 +41,10 @@ import Task from "../components/Task.vue";
 import axios from "axios";
 export default {
   components: { FilterPanel, Task },
-  props: { tasks: Array },
+  props: { 
+    tasks: Array,
+    darkMode: Boolean,
+    lightMode: Boolean },
   data() {
     return {
       role: "",
@@ -137,15 +144,8 @@ export default {
 </script>
 
 <style scoped>
-.button_panel {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-  margin-top: 2.77777778vh;
-  margin-bottom: 1.85185185vh;
-}
-button {
+/* dark mode start */
+.darkButton {
   padding: 1.38888889vh 1.82291667vw;
   background: #212121;
   box-shadow: inset 0px 6px 10px rgba(63, 63, 63, 0.5),
@@ -157,18 +157,55 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.darkButton:hover {
   color: rgba(20, 255, 236, 1);
 }
 
-button:active {
+.darkButton:active {
   box-shadow: inset 0px 5px 14px rgba(0, 0, 0, 0.5),
     inset 0px -5px 12px rgba(0, 0, 0, 0.5);
 }
 
-.filter_text {
+.darkFilter_text {
   font-size: 2.08333333vw;
   color: white;
+}
+/* dark mode end */
+
+/* light mode start */
+.lightButton {
+  padding: 1.38888889vh 1.82291667vw;
+  background: #0DCEDA;
+  box-shadow: inset 0px 6px 10px #69F6FF, inset 0px -3px 10px #119DA6;
+  border-radius: 0.78125vw;
+  border: none;
+  color: white;
+  font-size: 0.8333333333333vw;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.lightButton:hover {
+  color: black;
+}
+
+.lightButton:active {
+  box-shadow: inset 0px 5px 14px rgba(0, 0, 0, 0.5),
+    inset 0px -5px 12px rgba(0, 0, 0, 0.5);
+}
+
+.lightFilter_text {
+  font-size: 2.08333333vw;
+  color: black;
+}
+/* light mode end */
+.button_panel {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-top: 2.77777778vh;
+  margin-bottom: 1.85185185vh;
 }
 
 .task_list {
