@@ -29,6 +29,6 @@ export class Task {
     @Column({nullable: true})
     endDate: Date
 
-    @Column("varchar", { length: 30, nullable: true})
+    @Column("varchar", { length: 255, nullable: true})
     comment: string
 }
