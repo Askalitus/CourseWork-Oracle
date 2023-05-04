@@ -20,6 +20,7 @@
       <button :class="{darkButton: darkMode, lightButton: lightMode}" v-if="role == 'admin'" @click="adminPanel">Админ панель</button>
     </div>
     <div class="task_list">
+      <p :class="{darkNo_tasks: darkMode, lightNo_tasks: lightMode}" v-if="taskList.length == 0">Задач нет!</p>
       <div class="task" v-for="task in taskList" :key="task.id">
         <Task
           :task="task"
@@ -170,6 +171,10 @@ export default {
   font-size: 2.08333333vw;
   color: white;
 }
+.darkNo_tasks{
+  color: white;
+  font-size: 20px;
+}
 /* dark mode end */
 
 /* light mode start */
@@ -197,6 +202,11 @@ export default {
 .lightFilter_text {
   font-size: 2.08333333vw;
   color: black;
+}
+
+.lightNo_tasks{
+  color: black;
+  font-size: 20px;
 }
 /* light mode end */
 .button_panel {

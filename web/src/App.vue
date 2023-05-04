@@ -197,6 +197,7 @@
   background: linear-gradient(180deg, #91FAEA 0%, #24CBFF 100%);
   background-blend-mode: hard-light;
   background-repeat: no-repeat;
+  min-height: 100vh;
   }
   .lightHeader{
     width: 100%;

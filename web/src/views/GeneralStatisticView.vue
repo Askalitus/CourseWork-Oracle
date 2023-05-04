@@ -26,7 +26,7 @@
                 </div>
                 <div class="item">
                     <p :class="{darkTitle: darkMode, lightTitle: lightMode}">Частый заявитель</p>
-                    <p :class="{darkDesc: darkMode, lightDesc: lightMode}">{{ oftenApplicant.name + " " + oftenApplicant.surname  + " " + oftenApplicant.patronymic }}</p>
+                    <p :class="{darkDesc: darkMode, lightDesc: lightMode}">{{ oftenApplicant }}</p>
                 </div>
             </div>
         </div>
@@ -54,6 +54,9 @@ import axios from 'axios';
                 this.tasks = res.data
 
                 let applicants = this.tasks.map(el => el.applicant)
+                if(applicants.length == 0){
+                    this.oftenApplicant = 'Нету'
+                }else{
                 let result = {};
 
                 for (let i = 0; i < applicants.length; ++i)
@@ -80,7 +83,8 @@ import axios from 'axios';
                 axios
                 .get("http://localhost:3000/user/" + resultApplicant,
                 { withCredentials: true, "Access-Control-Allow-Origin": "http://localhost:3000" })
-                .then(res => this.oftenApplicant = res.data)
+                .then(res => this.oftenApplicant = res.data.name + ' ' + res.data.surname + ' ' + res.data.patronymic)
+            }
             });
         },
         computed: {
@@ -98,6 +102,9 @@ import axios from 'axios';
             },
             problemCabinet(){
                 let cabinets = this.tasks.map(el => el.cabinet)
+                if(cabinets.length == 0){
+                    return 'Нету'
+                }else{
                 let result = {};
 
                 for (let i = 0; i < cabinets.length; ++i)
@@ -123,6 +130,7 @@ import axios from 'axios';
                 
                 return resultCabinet
             }
+            }
         }
     }
 </script>
@@ -142,7 +150,7 @@ import axios from 'axios';
         color: white;
     }
     .darkDesc{
-        width: 8.75vw;
+        width: 10vw;
         padding: 0.833333333vw;
         background: #212121;
         border-radius: 15px; 
@@ -166,7 +174,7 @@ import axios from 'axios';
         color: black;
     }
     .lightDesc{
-        width: 8.75vw;
+        width: 10vw;
         padding: 0.833333333vw;
         background: #0DCEDA;
         border-radius: 15px; 
